@@ -31,7 +31,7 @@ def launch_server():
     try:
         # We start uvicorn as a subprocess or directly import and run it
         # Subprocess is preferred because it handles keyboard interrupt gracefully and separates stdout
-        cmd = [sys.executable, "-m", "uvicorn", "backend.app:app", "--host", "127.0.0.1", "--port", "8000"]
+        cmd = [sys.executable, "-m", "uvicorn", "backend.app:app", "--host", "0.0.0.0", "--port", os.environ.get("PORT", "8000")]
         
         print("[AquaSafe AI Launcher] Starting server subprocess...")
         # Start browser in a background thread or delayed launch
