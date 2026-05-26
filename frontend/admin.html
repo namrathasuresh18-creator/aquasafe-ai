@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaSafe AI - Administrative Desk</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.88rem;
+        }
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-align: left;
+            padding: 14px;
+            border-bottom: 1.5px solid var(--glass-border);
+        }
+        tr {
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: var(--transition-fast);
+        }
+        tr:hover {
+            background: rgba(255,255,255,0.01);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECURE DYNAMIC NOTIFICATION TOAST CONTAINER -->
+    <div id="toast-root"></div>
+
+    <!-- DYNAMIC NAVIGATION HEADER -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <span style="color: var(--primary);">🌊</span>
+                <span class="text-gradient">AquaSafe AI</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="admin.html" class="nav-link active">Admin Desk</a></li>
+            </ul>
+            <div class="nav-actions" id="nav-actions">
+                <!-- Dynamic injected buttons in app.js -->
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD LAYOUT -->
+    <div class="container dashboard-layout">
+        <h2 style="font-size:2.2rem; font-family:var(--font-heading);" class="text-gradient">Administrative Command Desk</h2>
+        <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:30px;">Manage global user roster, audit active pollution ledgers, prune fraudulent alerts.</p>
+
+        <!-- Dynamic Ticker Overview widgets -->
+        <div class="grid-3" style="margin: 0 0 30px 0;">
+            <div class="glass-card" style="padding: 20px; display:flex; align-items:center; gap:20px;">
+                <div class="feature-icon" style="margin-bottom:0; font-size:2rem; color:var(--primary);"><i data-lucide="users"></i></div>
+                <div>
+                    <div style="font-size: 1.8rem; font-weight:800;" id="admin-total-citizens">--</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">Registered Volunteers</div>
+                </div>
+            </div>
+            <div class="glass-card" style="padding: 20px; display:flex; align-items:center; gap:20px;">
+                <div class="feature-icon" style="margin-bottom:0; font-size:2rem; color:var(--danger);"><i data-lucide="file-text"></i></div>
+                <div>
+                    <div style="font-size: 1.8rem; font-weight:800;" id="admin-total-complaints">--</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">Complaints Audited</div>
+                </div>
+            </div>
+            <div class="glass-card" style="padding: 20px; display:flex; align-items:center; gap:20px;">
+                <div class="feature-icon" style="margin-bottom:0; font-size:2rem; color:var(--secondary);"><i data-lucide="gauge"></i></div>
+                <div>
+                    <div style="font-size: 1.8rem; font-weight:800;" id="admin-resolved-rate">--</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">Triage Success Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-2" style="margin:0; gap:30px; align-items:start;">
+            
+            <!-- LEFT CARD: USER DIRECTORY -->
+            <div class="glass-card" style="padding:24px;">
+                <h3 class="text-gradient" style="font-size:1.35rem; margin-bottom:6px;">System User Base Directory</h3>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:15px;">Monitor user profiles, system roles, and account security flags.</p>
+                
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>UID</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>System Role</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-users-table">
+                            <!-- Populated in app.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- RIGHT CARD: REPORT LEDGER MODIFICATION -->
+            <div class="glass-card" style="padding:24px;">
+                <h3 class="text-gradient" style="font-size:1.35rem; margin-bottom:6px;">Environmental Reports Audit Ledger</h3>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:15px;">Identify malicious entries or fraudulent warnings. Prune fake complaints immediately.</p>
+                
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Reporter</th>
+                                <th>Location Sector</th>
+                                <th>AI Risk</th>
+                                <th>Operations</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-reports-table">
+                            <!-- Populated in app.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- DYNAMIC SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="/js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>

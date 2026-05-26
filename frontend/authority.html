@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaSafe AI - Authority Command Console</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <!-- SECURE DYNAMIC NOTIFICATION TOAST CONTAINER -->
+    <div id="toast-root"></div>
+
+    <!-- DYNAMIC NAVIGATION HEADER -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <span style="color: var(--primary);">🌊</span>
+                <span class="text-gradient">AquaSafe AI</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="authority.html" class="nav-link active">Authority Desk</a></li>
+            </ul>
+            <div class="nav-actions" id="nav-actions">
+                <!-- Dynamic injected buttons in app.js -->
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD LAYOUT -->
+    <div class="container dashboard-layout">
+        
+        <!-- Emergency alert banner injector -->
+        <div id="authority-active-alerts">
+            <!-- Dynamic alerts pushed here in app.js -->
+        </div>
+
+        <h2 style="font-size:2.2rem; font-family:var(--font-heading);" class="text-gradient">Authority Command Console</h2>
+        <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:30px;">Triage citizen reports, review AI computer vision summaries, dispatch environmental action teams.</p>
+
+        <!-- Dynamic Ticker Overview widgets -->
+        <div class="grid-3" style="margin: 0 0 30px 0;">
+            <div class="glass-card" style="padding: 20px; display:flex; align-items:center; gap:20px;">
+                <div class="feature-icon" style="margin-bottom:0; font-size:2rem; color:var(--danger);"><i data-lucide="alert-triangle"></i></div>
+                <div>
+                    <div style="font-size: 1.8rem; font-weight:800;" id="total-reported-widget">--</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">Total Incidents Logged</div>
+                </div>
+            </div>
+            <div class="glass-card" style="padding: 20px; display:flex; align-items:center; gap:20px;">
+                <div class="feature-icon" style="margin-bottom:0; font-size:2rem; color:var(--primary);"><i data-lucide="check-circle-2"></i></div>
+                <div>
+                    <div style="font-size: 1.8rem; font-weight:800;" id="resolved-widget">--</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">Resolved Complaints</div>
+                </div>
+            </div>
+            <div class="glass-card" style="padding: 20px; display:flex; align-items:center; gap:20px;">
+                <div class="feature-icon" style="margin-bottom:0; font-size:2rem; color:var(--secondary);"><i data-lucide="sparkles"></i></div>
+                <div>
+                    <div style="font-size: 1.8rem; font-weight:800;" id="resolution-rate-widget">--</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">AI Resolution Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TWO COLUMN LAYOUT: CHARTS AND ACTIVE TRIAGE LIST -->
+        <div class="dashboard-grid">
+            
+            <!-- LEFT COLUMN: SMS LOGS AND CHARTS -->
+            <div class="dashboard-sidebar" style="display:flex; flex-direction:column; gap:24px;">
+                
+                <!-- 1. Donut and line charts -->
+                <div class="glass-card">
+                    <h4 class="form-label" style="margin-bottom:12px;">Environmental Index Trends</h4>
+                    <div id="auth-trend-chart" style="height: 180px; width: 100%;"></div>
+                </div>
+                
+                <div class="glass-card">
+                    <h4 class="form-label" style="margin-bottom:12px;">Estuary Safety Ratios</h4>
+                    <div id="auth-donut-chart" style="height: 160px; width: 100%; display:flex; justify-content:center; align-items:center;"></div>
+                </div>
+                
+                <!-- 2. GSM SMS dispatch log -->
+                <div class="glass-card">
+                    <h4 class="form-label" style="margin-bottom:12px; color: var(--secondary);">SMS Alert Dispatch Console</h4>
+                    <p style="color:var(--text-muted); font-size:0.75rem; margin-bottom:12px; line-height:1.3;">Simulates real-time notification warnings automatically broadcasted to environmental squads.</p>
+                    
+                    <div id="sms-dispatch-log" style="height: 200px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
+                        <div style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding-top:40px;">No alerts dispatched in this session yet.</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: TRIAGE GRID AND REGION BAR CHART -->
+            <div style="display:flex; flex-direction:column; gap:24px;">
+                
+                <!-- Regional avg parameters -->
+                <div class="glass-card">
+                    <h4 class="form-label" style="margin-bottom:12px;">Water Quality index (WQI) by Estuary Sector</h4>
+                    <div id="auth-bar-chart" style="height: 160px; width: 100%;"></div>
+                </div>
+
+                <!-- Complaints triages grids -->
+                <div class="glass-card" style="padding: 24px;">
+                    <h3 class="text-gradient" style="font-size:1.4rem; margin-bottom:10px;">Active Incidents Triage Grid</h3>
+                    <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">Review reported water conditions, examine visual pollution, and check automatic deep-learning analysis scores.</p>
+                    
+                    <div class="grid-2" id="authority-complaints-grid" style="margin: 0; gap:20px;">
+                        <!-- Complaints injected in app.js -->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- DYNAMIC SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/charts.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>

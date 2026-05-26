@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaSafe AI - Water Pollution Monitoring & Analytics</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <!-- GLOBAL DYNAMIC NOTIFICATION TOAST CONTAINER -->
+    <div id="toast-root"></div>
+
+    <!-- DYNAMIC POPUP FLOATING TOOLTIP FOR HEATMAP -->
+    <div id="map-tooltip" style="position: fixed; pointer-events: none; z-index: 998; display: none;"></div>
+
+    <!-- FUTURISTIC NAVIGATION BAR -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <span style="color: var(--primary);">🌊</span>
+                <span class="text-gradient">AquaSafe AI</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="#heatmap-section" class="nav-link">Pollution Map</a></li>
+                <li><a href="#awareness-section" class="nav-link">Awareness</a></li>
+                <li><a href="#contact-section" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions" id="nav-actions">
+                <!-- Dynamic injected buttons in app.js -->
+            </div>
+        </div>
+    </header>
+
+    <!-- FUTURISTIC HERO SECTION -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-tagline">
+                <span class="pulse-dot"></span>
+                PRESERVING AQUATIC HEALTH WITH QUANTUM AI MODELING
+            </div>
+            <h1>Empowering Citizens.<br><span class="text-gradient">Guarding Our Estuaries.</span></h1>
+            <p>AquaSafe AI combines deep-learning computer vision scans and mathematical bio-indicators to track, report, and neutralize water pollution. Citizens report, AI analyzes, and authorities respond instantly.</p>
+            <div class="hero-ctas">
+                <a href="login.html" class="btn btn-primary">File AI Report <i data-lucide="shield-alert"></i></a>
+                <a href="#heatmap-section" class="btn btn-secondary">Explore Live Heatmap <i data-lucide="map"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE QUANTIFIED REAL-TIME STATISTICS -->
+    <section class="stats-container">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <h2 class="text-gradient" id="hero-total-complaints">148</h2>
+                <p>Pollution Incidents Triaged</p>
+            </div>
+            <div class="stat-item">
+                <h2 class="text-gradient" id="hero-resolution-rate">86.4%</h2>
+                <p>Authority Resolution Rate</p>
+            </div>
+            <div class="stat-item">
+                <h2 class="text-gradient" id="hero-active-citizens">912</h2>
+                <p>Active Citizens Enlisted</p>
+            </div>
+            <div class="stat-item">
+                <h2 class="text-gradient">24/7</h2>
+                <p>Automated AI Sentinel Monitoring</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLATFORM CORE FEATURES -->
+    <section class="container" style="padding: 100px 0 60px 0;">
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 12px;" class="text-gradient">Intelligent Eco-Tech Features</h2>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Our ecosystem provides citizens and regulators with high-fidelity analytical toolsets.</p>
+        </div>
+        <div class="grid-3">
+            <div class="glass-card feature-card">
+                <div class="feature-icon"><i data-lucide="scan-eye"></i></div>
+                <h3>AI Computer Vision Scans</h3>
+                <p>Drag and drop water images. Our neural network detects thermoplastic agglomerates, synthetic foams, chemical sheen, and calculates organic risk percentages instantly.</p>
+            </div>
+            <div class="glass-card feature-card">
+                <div class="feature-icon"><i data-lucide="activity"></i></div>
+                <h3>WQI Calculator Diagnostics</h3>
+                <p>Inputs multi-tier parameters (pH, TDS, Turbidity, DO, Salinity) to compute standardized Water Quality Indexes and generates immediate mitigation lists.</p>
+            </div>
+            <div class="glass-card feature-card">
+                <div class="feature-icon"><i data-lucide="bell-ring"></i></div>
+                <h3>Emergency SMS Broadcast</h3>
+                <p>When severe contaminants breach safe baseline thresholds, our alert gateways automatically dispatch coordinates to ecological response squads.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE HEATMAP DYNAMIC MODULE -->
+    <section class="container" id="heatmap-section" style="padding: 60px 0;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 12px;" class="text-gradient">Interactive Pollution Heatmap</h2>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Interactive grid detailing active chemical spills and heavy-metal deposits. Hover to inspect deep reports; click empty space to pin coordinates.</p>
+        </div>
+        
+        <div class="heatmap-wrapper">
+            <canvas id="pollution-map-canvas" class="heatmap-canvas"></canvas>
+            <div class="heatmap-overlay">
+                <h4 style="color: white; font-size:0.95rem; margin-bottom:6px;">Live Threat Levels</h4>
+                <div class="heatmap-legend">
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: var(--danger);"></span>
+                        <span>Emergency Hazard (WQI &lt; 25)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: var(--warning);"></span>
+                        <span>High Risk (WQI 25-49)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: var(--secondary);"></span>
+                        <span>Moderate/Fair (WQI 50-69)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background-color: var(--primary);"></span>
+                        <span>Safe Waterway (WQI &gt; 70)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATIONAL AWARENESS SECTION -->
+    <section class="container" id="awareness-section" style="padding: 60px 0;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 12px;" class="text-gradient">Environmental Awareness Center</h2>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Learn how chemical parameters alter fragile riverbeds and marine lifespans.</p>
+        </div>
+        
+        <div class="awareness-carousel">
+            <div class="glass-card awareness-card">
+                <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 1.15rem;">Dissolved Oxygen (DO)</h4>
+                <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; margin-bottom: 15px;">Waterways need dissolved oxygen to support respiratory fish gills. Levels dropping below 2.0 mg/L create hypoxic biological dead zones, killing aquatic flora and fauna.</p>
+                <a href="#chat-trigger" onclick="document.getElementById('chat-trigger').click();" style="color: var(--secondary); font-size:0.8rem; font-weight:700;">Ask AI Explainer →</a>
+            </div>
+            <div class="glass-card awareness-card">
+                <h4 style="color: var(--secondary); margin-bottom: 10px; font-size: 1.15rem;">pH Acidic Corrosions</h4>
+                <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; margin-bottom: 15px;">Ideal pH rests between 6.5 and 8.5. Run-off from mining or heavy chemical dumpings decreases pH below 6.0, accelerating the dissolution of toxic heavy metals directly into fish tissue.</p>
+                <a href="#chat-trigger" onclick="document.getElementById('chat-trigger').click();" style="color: var(--secondary); font-size:0.8rem; font-weight:700;">Ask AI Explainer →</a>
+            </div>
+            <div class="glass-card awareness-card">
+                <h4 style="color: var(--accent); margin-bottom: 10px; font-size: 1.15rem;">Turbidity Suspensions</h4>
+                <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; margin-bottom: 15px;">Turbid cloudy water blocks solar arrays, completely halting underwater plant photosynthesis. Suspended mud dust acts as solar collectors, increasing water temperatures to stressed margins.</p>
+                <a href="#chat-trigger" onclick="document.getElementById('chat-trigger').click();" style="color: var(--secondary); font-size:0.8rem; font-weight:700;">Ask AI Explainer →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT FORM SECTION -->
+    <section class="container" id="contact-section" style="padding: 60px 0 100px 0;">
+        <div class="glass-card" style="max-width: 700px; margin: 0 auto; text-align: center;">
+            <h2 class="text-gradient" style="margin-bottom: 10px; font-size: 2.2rem;">Ecological Response Hotline</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 30px;">Have institutional or research inquiries? Reach out to our system engineering desk.</p>
+            <form id="landing-contact-form" onsubmit="event.preventDefault(); showToast('Inquiry logged. Our administrative team will respond shortly!', 'success'); this.reset();">
+                <div class="grid-2" style="margin: 0 0 20px 0;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" placeholder="E.g., Dr. Alice Vance" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" placeholder="alice@university.edu" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Inquiry Message</label>
+                    <textarea class="form-control" style="height: 120px; resize: none;" placeholder="Provide details regarding collaborative testing or authority account setup..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Dispatch Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FUTURISTIC DYNAMIC FLOATING CHATBOT WIDGET -->
+    <button class="chatbot-trigger flex-center" id="chat-trigger">
+        <i data-lucide="bot"></i>
+    </button>
+
+    <div class="chatbot-drawer glass-card" id="chat-drawer">
+        <div class="chatbot-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:1.4rem;">🤖</span>
+                <div>
+                    <div style="font-weight:700; color:white; font-size:0.9rem;">AquaSafe AI</div>
+                    <div style="font-size:0.7rem; color:var(--primary); font-weight:600; text-transform:uppercase;">Agent Online</div>
+                </div>
+            </div>
+            <button id="chat-close" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem;"><i data-lucide="x"></i></button>
+        </div>
+        <div class="chatbot-messages" id="chat-messages-container">
+            <div class="chat-bubble bot">
+                Hello! I am your <strong>AquaSafe AI Environmental Assistant</strong>. 🌊🤖<br><br>
+                Ask me any questions regarding **pH values**, **Dissolved Oxygen depletion**, **Turbidity indices**, or **how to report complaints**!
+            </div>
+        </div>
+        
+        <!-- Chat Action Chips -->
+        <div id="chat-chips-container" style="display:flex; gap:6px; overflow-x:auto; padding:6px 12px; border-top:1px solid var(--glass-border); scrollbar-width:none;">
+            <button class="chip-btn" style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); color:var(--text-muted); padding:3px 8px; border-radius:12px; font-size:0.7rem; cursor:pointer; white-space:nowrap;">Explain pH</button>
+            <button class="chip-btn" style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); color:var(--text-muted); padding:3px 8px; border-radius:12px; font-size:0.7rem; cursor:pointer; white-space:nowrap;">How to report?</button>
+            <button class="chip-btn" style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); color:var(--text-muted); padding:3px 8px; border-radius:12px; font-size:0.7rem; cursor:pointer; white-space:nowrap;">What is Dissolved Oxygen?</button>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="chat-input-field" class="chat-input" placeholder="Ask details about chemical run-offs...">
+            <button id="chat-send-btn" class="btn btn-primary" style="padding:10px 14px; border-radius:8px;"><i data-lucide="send"></i></button>
+        </div>
+    </div>
+
+    <!-- SYSTEM FOOTER -->
+    <footer style="background: var(--bg-surface); padding: 40px 0; border-top: 1px solid var(--glass-border); text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+        <div class="container">
+            <div style="font-family: var(--font-heading); font-weight:700; color:white; font-size:1.1rem; margin-bottom:10px;">AQUASAFE AI PLATFORM</div>
+            <p style="margin-bottom:12px;">Unified Environmental Ledger & Deep Learning Incident Triage System</p>
+            <p>© 2026 AquaSafe AI. Deployment Ready. Hackathon Production Build.</p>
+        </div>
+    </footer>
+
+    <!-- DYNAMIC SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/map.js"></script>
+    <script src="/js/chatbot.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Run Lucide CDN parser
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+            
+            // Initialize Interactive Heatmap Canvas
+            if (window.initPollutionMap) {
+                window.initPollutionMap("pollution-map-canvas", "map-tooltip");
+            }
+            
+            // Dynamic Tickers syncing with stats API
+            fetch("/api/stats")
+                .then(res => res.json())
+                .then(stats => {
+                    document.getElementById("hero-total-complaints").textContent = stats.summary.total_reports;
+                    document.getElementById("hero-resolution-rate").textContent = stats.summary.resolution_rate + "%";
+                    document.getElementById("hero-active-citizens").textContent = stats.summary.active_citizens;
+                })
+                .catch(err => console.log("Failed to sync hero stats:", err));
+        });
+    </script>
+</body>
+</html>

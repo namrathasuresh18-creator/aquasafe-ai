@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaSafe AI - Citizen Workspace</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .dashboard-tab-panel {
+            display: none;
+        }
+        .dashboard-tab-panel.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- DYNAMIC POPUP FLOATING TOOLTIP FOR HEATMAP -->
+    <div id="map-tooltip" style="position: fixed; pointer-events: none; z-index: 998; display: none;"></div>
+
+    <!-- DYNAMIC NAVIGATION HEADER -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <span style="color: var(--primary);">🌊</span>
+                <span class="text-gradient">AquaSafe AI</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="dashboard.html" class="nav-link active">Citizen Desk</a></li>
+            </ul>
+            <div class="nav-actions" id="nav-actions">
+                <!-- Dynamic injected buttons in app.js -->
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD LAYOUT -->
+    <div class="container dashboard-layout">
+        <h2 style="font-size:2.2rem; font-family:var(--font-heading);" class="text-gradient">Citizen Workspace</h2>
+        <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:10px;">Monitor environmental health, diagnose water properties, and log pollution incidents.</p>
+
+        <div class="dashboard-grid">
+            
+            <!-- SIDEBAR DESK TABS -->
+            <div class="dashboard-sidebar">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-btn active" id="tab-water-btn" data-panel="panel-water"><i data-lucide="activity"></i> Water Diagnostics</li>
+                    <li class="sidebar-btn" id="tab-image-btn" data-panel="panel-image"><i data-lucide="image"></i> Photo Incident Report</li>
+                    <li class="sidebar-btn" id="tab-map-btn" data-panel="panel-map"><i data-lucide="map"></i> Estuary Heatmap</li>
+                    <li class="sidebar-btn" id="tab-history-btn" data-panel="panel-history"><i data-lucide="folder-open"></i> My Logged Reports</li>
+                </ul>
+            </div>
+
+            <!-- MAIN WORKSPACE VIEWS -->
+            <div class="dashboard-content">
+                
+                <!-- VIEW 1: WATER QUALITY DIAGNOSTICS -->
+                <div id="panel-water" class="dashboard-tab-panel active">
+                    <div class="grid-2" style="margin: 0; gap:30px;">
+                        
+                        <!-- Properties Input Form -->
+                        <div class="glass-card">
+                            <h3 class="text-gradient" style="margin-bottom:15px; font-size:1.4rem;">Water Chemical Inputs</h3>
+                            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">Provide local physical metrics to compute Standardized WQI.</p>
+                            
+                            <form id="water-analysis-form">
+                                <div class="grid-2" style="margin: 0 0 10px 0; gap:16px;">
+                                    <div class="form-group">
+                                        <label class="form-label">pH Level <span style="font-size:0.75rem; color:var(--text-muted);">(Ideal: 7.0)</span></label>
+                                        <input type="number" id="param-ph" class="form-control" step="0.1" min="0" max="14" value="7.2" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Temperature (°C)</label>
+                                        <input type="number" id="param-temp" class="form-control" step="0.1" value="20.5" required>
+                                    </div>
+                                </div>
+                                <div class="grid-2" style="margin: 0 0 10px 0; gap:16px;">
+                                    <div class="form-group">
+                                        <label class="form-label">Turbidity (NTU)</label>
+                                        <input type="number" id="param-turb" class="form-control" step="0.1" value="4.2" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">TDS (mg/L)</label>
+                                        <input type="number" id="param-tds" class="form-control" step="1" value="120" required>
+                                    </div>
+                                </div>
+                                <div class="grid-3" style="margin: 0 0 10px 0; gap:12px;">
+                                    <div class="form-group">
+                                        <label class="form-label">DO (mg/L)</label>
+                                        <input type="number" id="param-do" class="form-control" step="0.1" value="8.1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Cond (µS/cm)</label>
+                                        <input type="number" id="param-cond" class="form-control" step="1" value="180" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Salinity (ppt)</label>
+                                        <input type="number" id="param-sal" class="form-control" step="0.1" value="0.3" required>
+                                    </div>
+                                </div>
+
+                                <!-- Coordinates pinning guide -->
+                                <div style="background: rgba(255,234,0,0.03); border:1px solid rgba(255,234,0,0.15); border-radius:8px; padding:10px; font-size:0.78rem; margin-bottom:20px; color: #ffea00; display:flex; align-items:center; gap:8px;">
+                                    <i data-lucide="map-pin" style="flex-shrink: 0; width: 16px; height: 16px;"></i>
+                                    <span>Tip: Pin specific incident coordinates by clicking locations on the **Estuary Heatmap** tab!</span>
+                                </div>
+
+                                <div class="grid-2" style="margin: 0 0 20px 0; gap:16px;">
+                                    <div class="form-group">
+                                        <label class="form-label">Latitude</label>
+                                        <input type="number" id="report-lat" class="form-control" step="0.000001" value="37.7749" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Longitude</label>
+                                        <input type="number" id="report-lon" class="form-control" step="0.000001" value="-122.4194" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Location / Waterway Name</label>
+                                    <input type="text" id="report-location" class="form-control" placeholder="E.g., North Canal Inlet" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">Run AI Diagnostics <i data-lucide="brain"></i></button>
+                            </form>
+                        </div>
+
+                        <!-- Result Analytics Dial -->
+                        <div class="flex-center" style="flex-direction: column; gap: 24px;">
+                            <div class="glass-card flex-center" style="flex-direction: column; width: 100%; padding: 40px 20px; text-align: center;">
+                                <h4 class="form-label" style="margin-bottom: 20px;">AI Bio-Index Diagnostic Dial</h4>
+                                
+                                <!-- Dial circle display -->
+                                <div class="wqi-meter" id="wqi-meter-dial" style="border-color: var(--primary); box-shadow: var(--shadow-glow-green);">
+                                    <span class="wqi-score" id="wqi-score-display">--</span>
+                                    <span class="wqi-label">WQI INDEX</span>
+                                </div>
+
+                                <div style="margin-top:20px; font-weight:700; font-size:1.15rem;" id="wqi-status-label">Standby Mode</div>
+                                <p style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Std. range: Safe &gt; 70 WQI</p>
+                            </div>
+
+                            <!-- Detailed diagnostic reports -->
+                            <div class="glass-card" style="width: 100%; min-height: 140px;" id="wqi-report-card">
+                                <h4 class="form-label" style="margin-bottom: 10px;">Diagnostic Explainer</h4>
+                                <div id="wqi-report-details" style="color:var(--text-muted); font-size:0.85rem; line-height:1.4;">
+                                    Fill in physical properties and click **Run Diagnostics**. The AI engine will flag extreme values, identify safe bounds breaches, and outline active corrective lists.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- VIEW 2: VISUAL PHOTO INCIDENT REPORT -->
+                <div id="panel-image" class="dashboard-tab-panel">
+                    <div class="grid-2" style="margin: 0; gap:30px;">
+                        
+                        <!-- Upload Form -->
+                        <div class="glass-card">
+                            <h3 class="text-gradient" style="margin-bottom:15px; font-size:1.4rem;">Photo Incident Submission</h3>
+                            <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">Drag-and-drop imagery of dirty water, toxic sludge, or plastic accumulations.</p>
+                            
+                            <form id="complaint-form">
+                                <!-- Drag and drop area -->
+                                <div class="drag-drop-area" id="drop-zone">
+                                    <input type="file" id="image-file" accept="image/*" style="display: none;">
+                                    
+                                    <div id="uploader-prompt">
+                                        <div class="drag-drop-icon"><i data-lucide="cloud-upload"></i></div>
+                                        <p>Drag files here or <span>browse local folders</span></p>
+                                        <span style="font-size:0.75rem; color:var(--text-muted); font-weight:400; margin-top:6px; display:block;">Supports PNG, JPG (Max 5MB)</span>
+                                    </div>
+                                    
+                                    <!-- Scanning line laser overlay -->
+                                    <div class="scanner-container" id="scanner-overlay">
+                                        <img src="" id="scan-preview-img" class="scanner-image">
+                                        <div class="scanner-bar"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="margin-top: 20px;">
+                                    <label class="form-label">Incident Description Details</label>
+                                    <textarea id="complaint-desc" class="form-control" style="height: 100px; resize: none;" placeholder="Provide visible warning descriptors: E.g., Dense plastic trash, bubble foaming, petroleum sheens near riverbanks..." required></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top:10px;">Submit Incident Report <i data-lucide="send"></i></button>
+                            </form>
+                        </div>
+
+                        <!-- Vision Report Output -->
+                        <div style="width:100%;" id="vision-analysis-result">
+                            <div class="glass-card flex-center" style="flex-direction: column; min-height: 380px; text-align: center;">
+                                <div class="feature-icon" style="font-size: 3.5rem; color: var(--secondary);"><i data-lucide="scan"></i></div>
+                                <h4 style="color: white; font-size: 1.2rem; margin-bottom: 8px;">AI Computer Vision Portal</h4>
+                                <p style="color:var(--text-muted); font-size: 0.85rem; max-width: 320px; line-height: 1.5;">Select an image, describe details, and submit. The vision system will isolate foreign segments, compute cleanliness scores, and flag active risks.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- VIEW 3: DYNAMIC HEATMAP FOR PINNING COORDINATES -->
+                <div id="panel-map" class="dashboard-tab-panel">
+                    <div class="glass-card" style="padding: 20px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                            <h3 class="text-gradient" style="font-size:1.4rem;">Interactive Pinning Heatmap</h3>
+                            <span style="font-size:0.75rem; color:var(--text-muted);">Double click / Single click to place dynamic coordinates pin</span>
+                        </div>
+                        <div class="heatmap-wrapper" style="height: 400px;">
+                            <canvas id="dashboard-map-canvas" class="heatmap-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW 4: MY HISTORICAL LOGGED REPORTS -->
+                <div id="panel-history" class="dashboard-tab-panel">
+                    <div class="glass-card">
+                        <h3 class="text-gradient" style="margin-bottom:15px; font-size:1.4rem;">My Reported Incidents</h3>
+                        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:20px;">A historical ledger of complaints submitted under your volunteer profile.</p>
+                        
+                        <div id="citizen-reports-list" style="display:flex; flex-direction:column; gap:12px;">
+                            <!-- Injected dynamically in app.js -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FUTURISTIC DYNAMIC FLOATING CHATBOT WIDGET -->
+    <button class="chatbot-trigger flex-center" id="chat-trigger">
+        <i data-lucide="bot"></i>
+    </button>
+
+    <div class="chatbot-drawer glass-card" id="chat-drawer">
+        <div class="chatbot-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:1.4rem;">🤖</span>
+                <div>
+                    <div style="font-weight:700; color:white; font-size:0.9rem;">AquaSafe AI</div>
+                    <div style="font-size:0.7rem; color:var(--primary); font-weight:600; text-transform:uppercase;">Agent Online</div>
+                </div>
+            </div>
+            <button id="chat-close" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem;"><i data-lucide="x"></i></button>
+        </div>
+        <div class="chatbot-messages" id="chat-messages-container">
+            <div class="chat-bubble bot">
+                Hello! I am your <strong>AquaSafe AI Environmental Assistant</strong>. 🌊🤖<br><br>
+                Ask me any questions regarding **pH values**, **Dissolved Oxygen depletion**, **Turbidity indices**, or **how to report complaints**!
+            </div>
+        </div>
+        
+        <!-- Chat Action Chips -->
+        <div id="chat-chips-container" style="display:flex; gap:6px; overflow-x:auto; padding:6px 12px; border-top:1px solid var(--glass-border); scrollbar-width:none;">
+            <button class="chip-btn" style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); color:var(--text-muted); padding:3px 8px; border-radius:12px; font-size:0.7rem; cursor:pointer; white-space:nowrap;">Explain pH</button>
+            <button class="chip-btn" style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); color:var(--text-muted); padding:3px 8px; border-radius:12px; font-size:0.7rem; cursor:pointer; white-space:nowrap;">How to report?</button>
+            <button class="chip-btn" style="background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); color:var(--text-muted); padding:3px 8px; border-radius:12px; font-size:0.7rem; cursor:pointer; white-space:nowrap;">What is Dissolved Oxygen?</button>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="chat-input-field" class="chat-input" placeholder="Ask details about chemical run-offs...">
+            <button id="chat-send-btn" class="btn btn-primary" style="padding:10px 14px; border-radius:8px;"><i data-lucide="send"></i></button>
+        </div>
+    </div>
+
+    <!-- DYNAMIC SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/map.js"></script>
+    <script src="/js/chatbot.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+
+            const tabs = document.querySelectorAll(".sidebar-btn");
+            const panels = document.querySelectorAll(".dashboard-tab-panel");
+
+            // Multi-tab toggle logic
+            tabs.forEach(tab => {
+                tab.addEventListener("click", () => {
+                    tabs.forEach(t => t.classList.remove("active"));
+                    panels.forEach(p => p.classList.remove("active"));
+                    
+                    tab.classList.add("active");
+                    const panelId = tab.getAttribute("data-panel");
+                    const panel = document.getElementById(panelId);
+                    if (panel) panel.classList.add("active");
+                    
+                    // Trigger map resize if map tab selected
+                    if (panelId === "panel-map" && window.appMap) {
+                        setTimeout(() => {
+                            window.appMap.resizeCanvas();
+                        }, 50);
+                    }
+                });
+            });
+
+            // Initialize replica dashboard map coordinate selection
+            if (window.initPollutionMap) {
+                window.initPollutionMap("dashboard-map-canvas", "map-tooltip");
+            }
+        });
+    </script>
+</body>
+</html>

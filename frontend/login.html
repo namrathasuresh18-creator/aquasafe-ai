@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaSafe AI - Secure Authentication</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .auth-card-wrapper {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+        .form-switcher {
+            display: none;
+        }
+        .form-switcher.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECURE AUTHENTICATION HEADER -->
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <span style="color: var(--primary);">🌊</span>
+                <span class="text-gradient">AquaSafe AI</span>
+            </div>
+            <a href="index.html" class="btn btn-secondary" style="padding: 8px 18px; font-size:0.85rem;"><i data-lucide="arrow-left"></i> Home</a>
+        </div>
+    </header>
+
+    <!-- FULL PAGE PORTAL WRAPPER -->
+    <div class="auth-page">
+        <div class="auth-card-wrapper">
+            <div class="glass-card">
+                
+                <!-- Tab Switching Panel -->
+                <div class="auth-tabs">
+                    <div class="auth-tab active" id="tab-login-btn">LOGIN</div>
+                    <div class="auth-tab" id="tab-signup-btn">SIGN UP</div>
+                </div>
+
+                <!-- 1. SIGN IN FORM -->
+                <div id="login-form-wrapper" class="form-switcher active">
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" id="login-username" class="form-control" placeholder="E.g., citizen1" required autocomplete="username">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                        </div>
+                        <div style="text-align: right; margin-bottom: 20px;">
+                            <a href="#forgot" onclick="showToast('Password recovery trigger activated. A reset link will be sent if the email matches.', 'success')" style="font-size: 0.8rem; color: var(--secondary); text-decoration: underline;">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Access Portal <i data-lucide="unlock"></i></button>
+                    </form>
+                    <div style="margin-top: 15px; text-align: center; font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">
+                        Demo Accounts:<br>
+                        Citizen: <strong>citizen1</strong> / password123<br>
+                        Authority: <strong>authority1</strong> / password123<br>
+                        Admin: <strong>admin1</strong> / password123
+                    </div>
+                </div>
+
+                <!-- 2. REGISTRATION FORM -->
+                <div id="signup-form-wrapper" class="form-switcher">
+                    <form id="signup-form">
+                        
+                        <!-- Role Selector -->
+                        <label class="form-label">Register User Role</label>
+                        <div class="role-selector">
+                            <div class="role-option active" data-role="citizen">Citizen</div>
+                            <div class="role-option" data-role="authority">Authority</div>
+                            <div class="role-option" data-role="admin">Admin</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" id="signup-name" class="form-control" placeholder="E.g., John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Desired Username</label>
+                            <input type="text" id="signup-username" class="form-control" placeholder="Unique username" required autocomplete="username">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mobile Number</label>
+                            <input type="tel" id="signup-phone" class="form-control" placeholder="For OTP warnings" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" id="signup-email" class="form-control" placeholder="name@domain.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Security Password</label>
+                            <input type="password" id="signup-password" class="form-control" placeholder="Min. 8 characters" required autocomplete="new-password">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account <i data-lucide="user-plus"></i></button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP SECURITY MODAL OVERLAY -->
+    <div class="otp-modal" id="otp-modal">
+        <div class="glass-card otp-box">
+            <h3 class="text-gradient" style="font-size: 1.6rem; margin-bottom: 10px;">Verification Code Sent</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px;">A simulated secure OTP has been dispatched to your mobile number. Enter the code below to authorize account activation.</p>
+            <form id="otp-form">
+                <div class="form-group">
+                    <label class="form-label">Enter 6-Digit Code</label>
+                    <input type="text" id="otp-code" class="form-control" style="text-align: center; font-size: 1.4rem; letter-spacing: 0.2em; font-weight:700;" placeholder="123456" maxlength="6" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Authorize Activation</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DYNAMIC SCRIPTS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="/js/app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+
+            const loginTab = document.getElementById("tab-login-btn");
+            const signupTab = document.getElementById("tab-signup-btn");
+            const loginWrap = document.getElementById("login-form-wrapper");
+            const signupWrap = document.getElementById("signup-form-wrapper");
+
+            // Simple Tab switcher logic
+            loginTab.addEventListener("click", () => {
+                loginTab.classList.add("active");
+                signupTab.classList.remove("active");
+                loginWrap.classList.add("active");
+                signupWrap.classList.remove("active");
+            });
+
+            signupTab.addEventListener("click", () => {
+                signupTab.classList.add("active");
+                loginTab.classList.remove("active");
+                signupWrap.classList.add("active");
+                loginWrap.classList.remove("active");
+            });
+
+            // Handle query strings parameters for deep-linking (e.g. ?tab=signup)
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            if (tabParam === 'signup') {
+                signupTab.click();
+            }
+        });
+    </script>
+</body>
+</html>
